@@ -28,7 +28,7 @@ class Header extends Component {
         <header>
           <p data-testid="email-field">{email}</p>
           <p>
-            Total Expense:
+            Despesa Total:
             {' '}
             <span data-testid="total-field">{this.totalExpense()}</span>
             {' '}

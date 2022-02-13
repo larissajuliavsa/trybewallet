@@ -73,7 +73,7 @@ class FormWallet extends React.Component {
     return (
       <form>
         <label htmlFor="valueExpense">
-          Value
+          Valor
           <input
             id="valueExpense"
             type="number"
@@ -84,7 +84,7 @@ class FormWallet extends React.Component {
           />
         </label>
         <label htmlFor="descriptionExpense">
-          Description
+          Descrição
           <input
             id="descriptionExpense"
             type="text"
