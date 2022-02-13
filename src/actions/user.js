@@ -1,6 +1,3 @@
-// Coloque aqui suas actions
-// import { futuraAPI } from 'futuraApi'
-
 // Action type
 export const GET_USER = 'GET_USER';
 

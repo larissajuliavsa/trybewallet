@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUser } from '../actions/user';
@@ -77,11 +76,7 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <button
-          type="button"
-          disabled={ isDisable }
-          onClick={ this.enterLogin }
-        >
+        <button type="button" disabled={ isDisable } onClick={ this.enterLogin }>
           Entrar
         </button>
       </form>
