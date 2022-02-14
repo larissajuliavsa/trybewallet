@@ -3,6 +3,7 @@
 export const GET_EXPENSE = 'GET_EXPENSE';
 export const GET_EXPENSE_SUCCESS = 'GET_EXPENSE_SUCCESS';
 export const GET_EXPENSE_FAIL = 'GET_EXPENSE_FAIL';
+export const GET_EXPENSE_DELETE = 'GET_EXPENSE_DELETE';
 export const GET_CURRENCY = 'GET_CURRENCY';
 
 // Action creator
@@ -30,6 +31,11 @@ export const getExpenseSuccess = (payload) => ({
 
 export const getExpenseFail = (payload) => ({
   type: GET_EXPENSE_FAIL,
+  payload,
+});
+
+export const getExpenseDelete = (payload) => ({
+  type: GET_EXPENSE_DELETE,
   payload,
 });
 
