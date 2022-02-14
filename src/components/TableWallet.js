@@ -12,6 +12,7 @@ class TableWallet extends Component {
   delete(id) {
     const { deleteExpense } = this.props;
     deleteExpense(id);
+    // função recebendo id que foi clicado e enviando para action de deletar
   }
 
   render() {

@@ -26,6 +26,9 @@ class FormWallet extends React.Component {
     this.currencyExchange();
   }
 
+  /*
+    Função async para filtrar as chaves da API que serão utilizadas como opção no formulário e também enviando essas chaves para action referente as moedas: getCurrency
+  */
   async currencyExchange() {
     const { catchCurrency } = this.props;
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
@@ -45,6 +48,9 @@ class FormWallet extends React.Component {
     this.setState({ [name]: value });
   }
 
+  /*
+    Nesta função async, estou pegando os dados do estado local e enviando a API para a chave exchangeRates, estruturei eles em uma variável para enviar para a action thunk
+  */
   async printForm(e) {
     e.preventDefault();
     const { id, value, description, currency, method, tag } = this.state;
