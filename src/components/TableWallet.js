@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getExpenseDelete } from '../actions/wallet';
+import { getExpenseDelete, editTableForm } from '../actions/wallet';
 
 class TableWallet extends Component {
   constructor() {
@@ -13,6 +13,14 @@ class TableWallet extends Component {
     const { deleteExpense } = this.props;
     deleteExpense(id);
     // função recebendo id que foi clicado e enviando para action de deletar
+  }
+
+  editTable(id) {
+    const { expenses, editExpense } = this.props;
+
+    const findIdExpense = expenses.find((edit) => edit.id === id);
+
+    editExpense(findIdExpense);
   }
 
   render() {
@@ -59,6 +67,13 @@ class TableWallet extends Component {
                 <td>
                   <button
                     type="button"
+                    onClick={ () => this.editTable(id) }
+                    data-testid="edit-btn"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
                     onClick={ () => this.delete(id) }
                     data-testid="delete-btn"
                     key={ id }
@@ -77,6 +92,7 @@ class TableWallet extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(getExpenseDelete(id)),
+  editExpense: (id) => dispatch(editTableForm(id)),
 });
 
 const mapStateToProps = (state) => ({

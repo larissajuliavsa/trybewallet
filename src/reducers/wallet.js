@@ -5,6 +5,8 @@ import {
   GET_EXPENSE_FAIL,
   GET_EXPENSE_DELETE,
   GET_CURRENCY,
+  GET_EDITION,
+  EDIT_EXPENSES,
 } from '../actions/wallet';
 
 const INITIAL_STATE = {
@@ -12,6 +14,8 @@ const INITIAL_STATE = {
   expenses: [],
   loading: false,
   error: '',
+  edit: false,
+  editTable: {},
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -26,6 +30,18 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       loading: true,
     };
+  case GET_EDITION:
+    return {
+      ...state,
+      editTable: action.payload,
+      edit: !state.edit,
+    };
+  case EDIT_EXPENSES:
+    return {
+      ...state,
+      expenses: [...action.payload],
+      edit: !state.edit,
+    };
   case GET_EXPENSE_SUCCESS:
     return {
       ...state,
@@ -39,11 +55,6 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       loading: false,
       error: 'A API Quebrou',
     };
-  /*
-    Para a ação de deletar uma expense, utilizei como base neste vídeo:
-    https://www.youtube.com/watch?v=DZ7AZuii9ZU indianos ❤️
-    Em expenses estou filtrando os id's que estou recebendo em state e que sejam diferente do id que action.payload retorna. Ao clicar no botão, permanecerão os id's que são diferentes de action.payload.
-  */
   case GET_EXPENSE_DELETE:
     return {
       ...state,
@@ -59,3 +70,9 @@ const walletReducer = (state = INITIAL_STATE, action) => {
 };
 
 export default walletReducer;
+
+/*
+    Para a ação de deletar uma expense, utilizei como base neste vídeo:
+    https://www.youtube.com/watch?v=DZ7AZuii9ZU indianos ❤️
+    Em expenses estou filtrando os id's que estou recebendo em state e que sejam diferente do id que action.payload retorna. Ao clicar no botão, permanecerão os id's que são diferentes de action.payload.
+  */

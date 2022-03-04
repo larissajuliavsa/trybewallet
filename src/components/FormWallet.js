@@ -1,20 +1,21 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getExpenseThunk, getCurrency } from '../actions/wallet';
+import { getExpenseThunk, getCurrency, editExpenses } from '../actions/wallet';
+
+const ALIMENTACAO = 'Alimentação';
 
 class FormWallet extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
-
     this.state = {
       id: 0,
-      value: 0,
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-      exchangeRates: [],
+      value: props.value,
+      description: props.description,
+      currency: props.currency,
+      method: props.method,
+      tag: props.tag,
+      edit: props.edit,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +26,26 @@ class FormWallet extends React.Component {
   componentDidMount() {
     this.currencyExchange();
   }
+
+  editForm = () => {
+    const { value, description, currency, method, tag } = this.state;
+    const { expenses, editTable, getNewExpenses } = this.props;
+    const { id, exchangeRates } = editTable;
+    const newState = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    };
+
+    const findId = expenses.findIndex((find) => find.id === editTable.id);
+    const newArray = [...expenses];
+    newArray.splice(findId, 1, newState);
+    getNewExpenses(newArray);
+  };
 
   /*
     Função async para filtrar as chaves da API que serão utilizadas como opção no formulário e também enviando essas chaves para action referente as moedas: getCurrency
@@ -37,9 +58,6 @@ class FormWallet extends React.Component {
       (currencies) => currencies !== 'USDT',
     );
 
-    this.setState({
-      exchangeRates: currencyKeys,
-    });
     catchCurrency(currencyKeys);
   }
 
@@ -54,14 +72,14 @@ class FormWallet extends React.Component {
   async printForm(e) {
     e.preventDefault();
     const { id, value, description, currency, method, tag } = this.state;
-    const { fetchCurrencyApi } = this.props;
+    const { fetchCurrencyApi, expenses } = this.props;
 
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
     const exchangeRates = data;
 
     const states = {
-      id,
+      id: expenses.length,
       value,
       description,
       currency,
@@ -70,12 +88,36 @@ class FormWallet extends React.Component {
       exchangeRates,
     };
 
-    this.setState({ id: id + 1, value: 0 }); // pegando o estado anterior de Id e somando +1
+    this.setState({
+      id: id + 1, // pegando o estado anterior de Id e somando +1
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: ALIMENTACAO,
+    });
     fetchCurrencyApi(states);
   }
 
   render() {
-    const { value, description, currency, method, tag, exchangeRates } = this.state;
+    const { value, description, currency, method, tag } = this.state;
+    const { edit } = this.props;
+    const currencyTest = [
+      'USD',
+      'CAD',
+      'EUR',
+      'GBP',
+      'ARS',
+      'BTC',
+      'LTC',
+      'JPY',
+      'CHF',
+      'AUD',
+      'CNY',
+      'ILS',
+      'ETH',
+      'XRP',
+    ];
     return (
       <form>
         <label htmlFor="valueExpense">
@@ -109,7 +151,7 @@ class FormWallet extends React.Component {
             onChange={ this.handleChange }
             data-testid="currency-input"
           >
-            {exchangeRates.map((options) => (
+            {currencyTest.map((options) => (
               <option key={ options }>{options}</option>
             ))}
           </select>
@@ -142,22 +184,34 @@ class FormWallet extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ this.printForm }>
-          Adicionar Despesa
+        <button type="button" onClick={ edit ? this.editForm : this.printForm }>
+          {edit ? 'Editar Despesa' : 'Adicionar Despesa'}
         </button>
       </form>
     );
   }
 }
 
+FormWallet.defaultProps = {
+  id: 0,
+  value: '',
+  description: '',
+  currency: 'USD',
+  method: 'Dinheiro',
+  tag: ALIMENTACAO,
+  edit: false,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencyApi: (state) => dispatch(getExpenseThunk(state)),
   catchCurrency: (state) => dispatch(getCurrency(state)),
+  getNewExpenses: (state) => dispatch(editExpenses(state)),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editTable: state.wallet.editTable,
 });
 
 FormWallet.propTypes = {

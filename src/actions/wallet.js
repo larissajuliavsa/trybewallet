@@ -5,6 +5,8 @@ export const GET_EXPENSE_SUCCESS = 'GET_EXPENSE_SUCCESS';
 export const GET_EXPENSE_FAIL = 'GET_EXPENSE_FAIL';
 export const GET_EXPENSE_DELETE = 'GET_EXPENSE_DELETE';
 export const GET_CURRENCY = 'GET_CURRENCY';
+export const GET_EDITION = 'GET_EDITION';
+export const EDIT_EXPENSES = 'EDIT_EXPENSES';
 
 // Action creator
 
@@ -24,6 +26,16 @@ export const getCurrency = (payload) => ({
   payload,
 });
 
+export const editExpenses = (payload) => ({
+  type: EDIT_EXPENSES,
+  payload,
+});
+
+export const editTableForm = (payload) => ({
+  type: GET_EDITION,
+  payload,
+});
+
 export const getExpenseSuccess = (payload) => ({
   type: GET_EXPENSE_SUCCESS,
   payload,
@@ -39,10 +51,10 @@ export const getExpenseDelete = (payload) => ({
   payload,
 });
 
-export const getExpenseThunk = (object) => async (dispatch) => {
+export const getExpenseThunk = (state) => async (dispatch) => {
   dispatch(getExpense());
   try {
-    dispatch(getExpenseSuccess(object));
+    dispatch(getExpenseSuccess(state));
   } catch (error) {
     dispatch(getExpenseFail(error));
   }
