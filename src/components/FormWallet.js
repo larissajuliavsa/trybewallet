@@ -5,6 +5,8 @@ import { getExpenseThunk, getCurrency, editExpenses } from '../actions/wallet';
 
 const ALIMENTACAO = 'Alimentação';
 
+// Eu quis fazer o requisito 9 para deixar a aplicação mais funcional e para aprender como funciona o código em relação a edição de forms, fiz com a ajuda do Matheus Ferreira e Lucas Petzinger
+
 class FormWallet extends React.Component {
   constructor(props) {
     super();
