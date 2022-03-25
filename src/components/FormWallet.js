@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { getExpenseThunk, getCurrency, editExpenses } from '../actions/wallet';
+import '../assets/FormWallet.css';
+import 'bulma/css/bulma.css';
 
 const ALIMENTACAO = 'Alimentação';
 
@@ -17,7 +19,7 @@ class FormWallet extends React.Component {
       currency: props.currency,
       method: props.method,
       tag: props.tag,
-      edit: props.edit,
+      // edit: props.edit,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -121,75 +123,88 @@ class FormWallet extends React.Component {
       'XRP',
     ];
     return (
-      <form>
-        <label htmlFor="valueExpense">
-          Valor
-          <input
-            id="valueExpense"
-            type="number"
-            name="value"
-            value={ value }
-            onChange={ this.handleChange }
-            data-testid="value-input"
-          />
-        </label>
-        <label htmlFor="descriptionExpense">
-          Descrição
-          <input
-            id="descriptionExpense"
-            type="text"
-            name="description"
-            value={ description }
-            onChange={ this.handleChange }
-            data-testid="description-input"
-          />
-        </label>
-        <label htmlFor="currency">
-          Moeda
-          <select
-            id="currency"
-            name="currency"
-            value={ currency }
-            onChange={ this.handleChange }
-            data-testid="currency-input"
+      <div className="container-form-table">
+        <form className="container-form-expenses">
+          <label htmlFor="valueExpense">
+            <p className="expense-label">Valor</p>
+            <input
+              className="expense-value"
+              id="valueExpense"
+              type="number"
+              name="value"
+              value={ value }
+              onChange={ this.handleChange }
+              data-testid="value-input"
+            />
+          </label>
+          <label htmlFor="descriptionExpense">
+            <p className="expense-label">Descrição</p>
+            <input
+              className="expense-description"
+              id="descriptionExpense"
+              type="text"
+              name="description"
+              value={ description }
+              onChange={ this.handleChange }
+              data-testid="description-input"
+            />
+          </label>
+          <label className="select is-small" htmlFor="currency">
+            <p className="expense-label">Moeda</p>
+            <select
+              className="expense-currencies"
+              id="currency"
+              name="currency"
+              value={ currency }
+              onChange={ this.handleChange }
+              data-testid="currency-input"
+            >
+              {currencyTest.map((options) => (
+                <option key={ options }>{options}</option>
+              ))}
+            </select>
+          </label>
+          <label className="select is-small" htmlFor="paymentMethod">
+            <p className="expense-label">Pagamento</p>
+            <select
+              className="expense-method"
+              id="paymentMethod"
+              name="method"
+              value={ method }
+              onChange={ this.handleChange }
+              data-testid="method-input"
+            >
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+            </select>
+          </label>
+          <label className="select is-small" htmlFor="category">
+            <p className="expense-label">Categoria</p>
+            <select
+              className="expense-categories"
+              id="category"
+              name="tag"
+              value={ tag }
+              onChange={ this.handleChange }
+              data-testid="tag-input"
+            >
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
+            </select>
+          </label>
+          <button
+            className="expense-btn"
+            type="button"
+            onClick={ edit ? this.editForm : this.printForm }
           >
-            {currencyTest.map((options) => (
-              <option key={ options }>{options}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="paymentMethod">
-          <select
-            id="paymentMethod"
-            name="method"
-            value={ method }
-            onChange={ this.handleChange }
-            data-testid="method-input"
-          >
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="category">
-          <select
-            id="category"
-            name="tag"
-            value={ tag }
-            onChange={ this.handleChange }
-            data-testid="tag-input"
-          >
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
-        <button type="button" onClick={ edit ? this.editForm : this.printForm }>
-          {edit ? 'Editar Despesa' : 'Adicionar Despesa'}
-        </button>
-      </form>
+            {edit ? 'Edit' : 'Add'}
+          </button>
+        </form>
+      </div>
     );
   }
 }

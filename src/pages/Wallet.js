@@ -12,17 +12,6 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        {/* {edit ? (
-          <FormWallet
-            value={ value }
-            description={ description }
-            currency={ currency }
-            method={ method }
-            tag={ tag }
-          />
-        ) : (
-          <FormWallet />
-        )} */}
         {edit && (
           <FormWallet
             value={ value }
