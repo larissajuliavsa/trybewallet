@@ -3,7 +3,9 @@
 
 <p align="center">Trybewallet is a platform where you can manage your financials in the best and easiest way. In this project, I used data from an API that returns several currencies. I developed this project through Trybe course, in Front End module.</p>
 
-<img src="./src/assets/img/trybewallet-preview.gif" />
+<p align="center">
+  <img src="./src/assets/img/trybewallet-preview.gif" />
+</p>
 
 <h3 align="left">Skills</h3>
 
