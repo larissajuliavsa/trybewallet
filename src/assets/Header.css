@@ -1,0 +1,33 @@
+.container-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2% 10%;
+}
+
+.header-logo {
+  width: 50px;
+}
+
+.header-data-user {
+  align-items: center;
+  background-color: #4678CD;
+  border-radius: 15px;
+  box-shadow: 0 8px 12px rgba(70, 119, 205, 0.233);
+  color: #FBFCFE;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 30px;
+}
+
+.user-email {
+  font-size: 18px;
+  padding-right: 20px;
+}
+
+.user-expenses {
+  font-size: 18px;
+  font-weight: 700;
+}
+

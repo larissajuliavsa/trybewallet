@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getExpenseDelete, editTableForm } from '../actions/wallet';
+import Edit from '../assets/img/Edit.svg';
+import Delete from '../assets/img/Delete.svg';
+import '../assets/TableWallet.css';
 
 class TableWallet extends Component {
   constructor() {
@@ -27,63 +30,82 @@ class TableWallet extends Component {
     const { expenses } = this.props;
     // para evitar o warning no console, utilizei a tag <thead> e <tbody>
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
+      <table className="container-table">
+        <div className="container-table-form">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Método de pagamento</th>
+              <th>Tag</th>
+              <th>Descrição</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Câmbio utilizado</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+        </div>
         <tbody>
-          {expenses.map((eachExpense) => {
-            const {
-              id,
-              value,
-              description,
-              currency,
-              method,
-              tag,
-              exchangeRates,
-            } = eachExpense;
-            return (
-              <tr key={ id }>
-                <td>{description}</td>
-                <td>{tag}</td>
-                <td>{method}</td>
-                <td>{Number(value).toFixed(2)}</td>
-                <td>{exchangeRates[currency].name.split('/')[0]}</td>
-                <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
-                <td>
-                  {Number(value * exchangeRates[currency].ask).toFixed(2)}
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={ () => this.editTable(id) }
-                    data-testid="edit-btn"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={ () => this.delete(id) }
-                    data-testid="delete-btn"
-                    key={ id }
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+          <div className="container-table-body">
+            {expenses.map((eachExpense) => {
+              const {
+                id,
+                value,
+                description,
+                currency,
+                method,
+                tag,
+                exchangeRates,
+              } = eachExpense;
+              return (
+                <tr key={ id }>
+                  <td>
+                    {Number(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </td>
+                  <td>{exchangeRates[currency].name.split('/')[0]}</td>
+                  <td>{method}</td>
+                  <td>{tag}</td>
+                  <td>{description}</td>
+                  <td>
+                    {
+                      Number(value * exchangeRates[currency].ask)
+                        .toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+                    }
+                  </td>
+                  <td>Real</td>
+                  <td>
+                    {
+                      Number(exchangeRates[currency].ask)
+                        .toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+                    }
+                  </td>
+                  <td>
+                    <div className="container-table-btns">
+                      <button
+                        className="table-btns"
+                        type="button"
+                        onClick={ () => this.editTable(id) }
+                        data-testid="edit-btn"
+                      >
+                        <img src={ Edit } alt="Edit" />
+                      </button>
+                      <button
+                        className="table-btns"
+                        type="button"
+                        onClick={ () => this.delete(id) }
+                        data-testid="delete-btn"
+                        key={ id }
+                      >
+                        <img src={ Delete } alt="Delete" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+
+          </div>
         </tbody>
       </table>
     );

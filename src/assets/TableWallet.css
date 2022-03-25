@@ -1,0 +1,48 @@
+.container-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.container-table-form {
+  background-color: #FBFCFE;
+  border-radius: 0 0 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.178) 0px 25px 50px -12px;
+  margin: 0 auto;
+  padding: 10px 30px;
+  width: 90%;
+}
+
+tr th, tr td {
+  padding: 8px;
+  text-align: center;
+	vertical-align: middle;
+  width: 10%;
+}
+
+.container-table-body {
+  margin: 30px auto;
+  padding: 5px 30px;
+  width: 90%;
+}
+
+tr td {
+  color: #363545;
+}
+
+.table-btns {
+  background-color: #F5F8FD;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px;
+  padding: 8px;
+}
+
+
+.table-btns:hover {
+  transform: translateY(-2px);
+}
+
+.table-btns:active {
+  transform: translateY(0);
+}
